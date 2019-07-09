@@ -21,36 +21,13 @@ App = {
   },
 
   bindEvents: function () {
-    $(document).on('click', '.btn-pay', App.handleAdopt);
     $(document).on('click', '.btn-submit', App.handleClickUpload);
   },
 
   handleClickUpload: function () {
-    document.getElementById('loader').style = "visibility:visible;"
+    document.getElementById('loading').classList.add("show");
   },
 
-  handleAdopt: function () {
-    var payInstance;
-
-    web3.eth.getAccounts(function (error, accounts) {
-      if (error) {
-        console.log(error);
-      }
-
-      var account = accounts[0]
-
-      App.contracts.Pay.deployed().then(function (instance) {
-        payInstance = instance;
-
-        return payInstance.pay({ from: account });
-
-      }).then(function (result) {
-        document.find('button').text('Success').attr('disabled', true);
-      }).catch(function (err) {
-        console.log(err.message);
-      });
-    });
-  }
 };
 
 $(function () {
