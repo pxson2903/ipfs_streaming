@@ -92,7 +92,7 @@ function uploadToIpfs(outputDirectory, name) {
           split = ipfsHash.path.split('/')
           segment = split[split.length-1]
 
-          data = data.replace(segment, "http://localhost:8080/ipfs/"+ipfsHash.hash)
+          data = data.replace(segment, "https://bachelorapp-dev1.tk:8081/ipfs/"+ipfsHash.hash)
         })
 
         fs.writeFile("./playlists/" + name + ".m3u8", data, "utf8", function(err) { 
