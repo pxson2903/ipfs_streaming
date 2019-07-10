@@ -1,6 +1,8 @@
 App = {
   init: function () {
     var video = document.getElementById('video');
+    video.autoplay = false;
+ 
     var playlist = new URLSearchParams(window.location.search).get("video")
 
     if (Hls.isSupported()) {
