@@ -7,7 +7,7 @@ App = {
 
     if (Hls.isSupported()) {
       var hls = new Hls();
-      hls.loadSource(playlist);
+      hls.loadSource("src/files/" + playlist);
       hls.attachMedia(video);
       hls.on(Hls.Events.MANIFEST_PARSED, function () {
         var promise = video.play();
