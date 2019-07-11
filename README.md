@@ -61,7 +61,7 @@ sudo apt-get install ffmpeg
 - Open file ~/.ipfs/config
 - Go to Addresses, change port gateway to 8088
 
-#### H3 Setup demo project 
+#### Setup demo project 
 git clone https://github.com/pxson2903/ipfs_streaming
 cd ipfs_streaming
 npm install
