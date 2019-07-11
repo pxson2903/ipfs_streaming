@@ -62,17 +62,17 @@ sudo apt-get install ffmpeg
 - Go to Addresses, change port gateway to 8088
 
 #### Setup demo project 
-git clone https://github.com/pxson2903/ipfs_streaming
-cd ipfs_streaming
-npm install
-npm start
+- git clone https://github.com/pxson2903/ipfs_streaming
+- cd ipfs_streaming
+- npm install
+- npm start
 
 #### Reconfigure nginx to be accessible from the Internet
-Go to folder ipfs_streaming/nginx
-Open file nginx.conf, replace ipfs-demo.tk by your domain name 
-Open file sudo nano /etc/nginx/sites-available/example.com
-Delete all current content, and paste content in file nginx.conf into it
-Restart nginx service
+- Go to folder ipfs_streaming/nginx
+- Open file nginx.conf, replace ipfs-demo.tk by your domain name 
+- Open file sudo nano /etc/nginx/sites-available/example.com
+- Delete all current content, and paste content in file nginx.conf into it
+- Restart nginx service
 ```
 # ipfs_streaming/nginx/nginx.conf
 server {
@@ -128,3 +128,4 @@ server {
 
 # DONE
 Now got the your link https://example.com/demo to see your website
+
