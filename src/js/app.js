@@ -11,14 +11,14 @@ App = {
 
         // Generate desktop link
         playlistsTemplate.find('.link').attr('href', '/play.html?video='+playlist);
-        playlistsTemplate.find('.link').text('[Desktop]' + playlist)
+        playlistsTemplate.find('.link').text('[Desktop] - ' + playlist)
 
         playlistsRow.append(playlistsTemplate.html());
         
 
         // Generate mobile link
         playlistsTemplate.find('.link').attr('href', '/files/'+playlist);
-        playlistsTemplate.find('.link').text('[Mobile]' + playlist)
+        playlistsTemplate.find('.link').text('[Mobile] - ' + playlist)
 
         playlistsRow.append(playlistsTemplate.html());
       }
