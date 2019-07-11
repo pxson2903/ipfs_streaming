@@ -17,15 +17,15 @@ var ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'})
 // const ipfs = new IPFS()
 
 const defaultPlaylistName = "index.m3u8"
+const baseUrl =  "https://ipfs-demo.tk/ipfs/"
 
 var app = express()
 
 app.use(serveStatic(path.join(__dirname, 'src')))
 app.use(serveStatic(path.join(__dirname, 'playlists')))
-app.use(serveStatic(path.join(__dirname, 'build/contracts')))
 
 app.use('/playlists', function (req, res, next) { 
-  res.send(JSON.stringify(fs.readdirSync("./playlists")));
+  res.send(JSON.stringify(fs.readdirSync("src/playlists")));
 })
 
 app.use('/fileupload', function (req, res, next) {
@@ -34,7 +34,7 @@ app.use('/fileupload', function (req, res, next) {
 
     var name = files.filetoupload.name.substring(0, files.filetoupload.name.indexOf('.'))
     var oldpath = files.filetoupload.path;
-    var outputDirectory = './uploads/' + name;
+    var outputDirectory = 'src/uploads/' + name;
 
     mkdirp(outputDirectory)
 
@@ -92,10 +92,10 @@ function uploadToIpfs(outputDirectory, name) {
           split = ipfsHash.path.split('/')
           segment = split[split.length-1]
 
-          data = data.replace(segment, "https://ipfs-demo.tk/ipfs/"+ipfsHash.hash)
+          data = data.replace(segment, baseUrl + ipfsHash.hash)
         })
 
-        fs.writeFile("./playlists/" + name + ".m3u8", data, "utf8", function(err) { 
+        fs.writeFile("src/playlists/" + name + ".m3u8", data, "utf8", function(err) { 
           if (err) { 
             console.log("couldn't save the playlist file to playlist directory")
           } else { 
