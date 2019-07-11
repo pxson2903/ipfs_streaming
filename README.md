@@ -26,17 +26,17 @@ sudo ufw allow 'Nginx HTTP'
 sudo add-apt-repository ppa:certbot/certbot
 sudo apt-get update
 sudo apt-get install python-certbot-nginx
-sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/example.com
-sudo nano /etc/nginx/sites-available/example.com
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/ipfs-demo.tk
+sudo nano /etc/nginx/sites-available/ipfs-demo.tk
 
 # Find the existing server_name line and replace _ by with your domain name:
-# server_name example.com www.example.com;
+# server_name ipfs-demo.tk www.ipfs-demo.tk;
 
 sudo systemctl reload nginx
 
 # Setup SSL
 
-sudo certbot --nginx -d example.com -d www.example.com
+sudo certbot --nginx -d ipfs-demo.tk -d www.ipfs-demo.tk
 
 # If that's successful, certbot will ask how you'd like to configure your HTTPS settings select option 2: 
 
@@ -70,7 +70,7 @@ sudo apt-get install ffmpeg
 #### Reconfigure nginx to be accessible from the Internet
 - Go to folder ipfs_streaming/nginx
 - Open file nginx.conf, replace ipfs-demo.tk by your domain name 
-- Open file sudo nano /etc/nginx/sites-available/example.com
+- Open file sudo nano /etc/nginx/sites-available/ipfs-demo.tk
 - Delete all current content, and paste content in file nginx.conf into it
 - Restart nginx service
 ```
@@ -127,5 +127,5 @@ server {
 ```
 
 # DONE
-Now got the your link https://example.com/demo to see your website
+Now got the your link https://ipfs-demo.tk/demo to see your website
 
