@@ -25,7 +25,7 @@ app.use(serveStatic(path.join(__dirname, 'src')))
 app.use(serveStatic(path.join(__dirname, 'playlists')))
 
 app.use('/playlists', function (req, res, next) { 
-  res.send(JSON.stringify(fs.readdirSync("src/playlists")));
+  res.send(JSON.stringify(fs.readdirSync("src/files")));
 })
 
 app.use('/fileupload', function (req, res, next) {
@@ -95,7 +95,7 @@ function uploadToIpfs(outputDirectory, name) {
           data = data.replace(segment, baseUrl + ipfsHash.hash)
         })
 
-        fs.writeFile("src/playlists/" + name + ".m3u8", data, "utf8", function(err) { 
+        fs.writeFile("src/files/" + name + ".m3u8", data, "utf8", function(err) { 
           if (err) { 
             console.log("couldn't save the playlist file to playlist directory")
           } else { 
