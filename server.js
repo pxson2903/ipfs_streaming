@@ -31,16 +31,17 @@ app.use('/playlists', function (req, res, next) {
 app.use('/fileupload', function (req, res, next) {
   var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
-      generateVideo(files, "320x240")
-      generateVideo(files, "640x480")
-      generateVideo(files, "1280x720")
+      generateVideo(files, "320x240", false)
+      generateVideo(files, "640x480", false)
+      generateVideo(files, "1280x720", true)
   });
 });
 
-function generateVideo(files, birate) {
+function generateVideo(files, birate, resEnd) {
   var name = files.filetoupload.name.substring(0, files.filetoupload.name.indexOf('.'))
   var oldpath = files.filetoupload.path;
-  var outputDirectory = 'src/uploads/' + name + "_" + birate.replace('x', '_');
+  const outputName = name + "_" + birate.replace('x', '_')
+  var outputDirectory = 'src/uploads/' + outputName;
   mkdirp(outputDirectory);
 
   ffmpeg(oldpath, { timeout: 432000 })
@@ -58,11 +59,13 @@ function generateVideo(files, birate) {
       })
       .on('end', function () {
         console.log('File has been converted succesfully');
-        uploadToIpfs(outputDirectory, name).then(function (err) { 
+        uploadToIpfs(outputDirectory, outputName).then(function (err) { 
           if (!err) { 
               cleanup(outputDirectory)
-              res.redirect(301, "/");
-              res.end();
+              if (resEnd) {
+                res.redirect(301, "/");
+                res.end();
+              }
           }
         })
       })
