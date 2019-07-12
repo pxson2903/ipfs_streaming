@@ -31,22 +31,27 @@ app.use('/playlists', function (req, res, next) {
 app.use('/fileupload', function (req, res, next) {
   var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
+      generateVideo(files, "320x240")
+      generateVideo(files, "640x480")
+      generateVideo(files, "1280x720")
+  });
+});
 
-    var name = files.filetoupload.name.substring(0, files.filetoupload.name.indexOf('.'))
-    var oldpath = files.filetoupload.path;
-    var outputDirectory = 'src/uploads/' + name;
+function generateVideo(files, birate) {
+  var name = files.filetoupload.name.substring(0, files.filetoupload.name.indexOf('.'))
+  var oldpath = files.filetoupload.path;
+  var outputDirectory = 'src/uploads/' + name + "_" + birate.replace('x', '_');
+  mkdirp(outputDirectory);
 
-    mkdirp(outputDirectory)
-
-    ffmpeg(oldpath, { timeout: 432000 })
+  ffmpeg(oldpath, { timeout: 432000 })
       .addOption('-level', 3.0)
-      .addOption('-s', '640x360')
+      .addOption('-s', birate)
       .addOption('-start_number', 0)
       .addOption('-hls_time', 10)
       .addOption('-hls_list_size', 0)
       .format('hls')
       .on('start', function (cmd) {
-        console.log('Started ' + cmd);
+        console.log('Started convert to ' + birate + ': ' + cmd);
       })
       .on('error', function (err) {
         console.log('an error happened: ' + err.message);
@@ -62,8 +67,7 @@ app.use('/fileupload', function (req, res, next) {
         })
       })
       .save(outputDirectory + "/" + defaultPlaylistName)
-  });
-});
+}
 
 function uploadToIpfs(outputDirectory, name) {
   return new Promise(function (resolve, reject) {
