@@ -31,13 +31,13 @@ app.use('/playlists', function (req, res, next) {
 app.use('/fileupload', function (req, res, next) {
   var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
-      generateVideo(files, "320x240", false)
-      generateVideo(files, "640x480", false)
-      generateVideo(files, "1280x720", true)
+      generateVideo(files, "320x240", false, res)
+      generateVideo(files, "640x480", false, res)
+      generateVideo(files, "1280x720", true, res)
   });
 });
 
-function generateVideo(files, birate, resEnd) {
+function generateVideo(files, birate, resEnd, res) {
   var name = files.filetoupload.name.substring(0, files.filetoupload.name.indexOf('.'))
   var oldpath = files.filetoupload.path;
   const outputName = name + "_" + birate.replace('x', '_')
