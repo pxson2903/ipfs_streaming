@@ -17,7 +17,7 @@ var ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'})
 // const ipfs = new IPFS()
 
 const defaultPlaylistName = "index.m3u8"
-const baseUrl =  "https://ipfs-demo.tk/ipfs/"
+const baseUrl =  "https://ipfs-sg-demo.tk/ipfs/"
 
 var app = express()
 
