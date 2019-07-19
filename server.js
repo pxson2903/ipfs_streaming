@@ -38,8 +38,8 @@ app.use('/fileupload', function (req, res, next) {
 });
 
 function generateVideo(files, birate, resEnd, res) {
-  var name = files.filetoupload.name.substring(0, files.filetoupload.name.indexOf('.'))
-  var oldpath = files.filetoupload.path;
+  var name = 'SagoFinal2k'
+  var oldpath = '/home/admin/Downloads/SagoFinal2k.mp4';
   const outputName = name + "_" + birate.replace('x', '_')
   var outputDirectory = 'src/uploads/' + outputName;
 
