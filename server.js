@@ -25,7 +25,7 @@ app.use(serveStatic(path.join(__dirname, 'src')))
 app.use(serveStatic(path.join(__dirname, 'playlists')))
 
 app.use('/playlists', function (req, res, next) { 
-  res.send(JSON.stringify(fs.readdirSync("src/files")));
+  res.send(JSON.stringify(fs.readdirSync("src/files").filter(file => file.name.indexOf('_final.m3u8'))));
 })
 
 app.use('/fileupload', function (req, res, next) {
@@ -42,7 +42,9 @@ function generateVideo(files, birate, resEnd, res) {
   var oldpath = files.filetoupload.path;
   const outputName = name + "_" + birate.replace('x', '_')
   var outputDirectory = 'src/uploads/' + outputName;
+
   mkdirp(outputDirectory);
+  generatePlayFile(name);
 
   ffmpeg(oldpath, { timeout: 432000 })
       .addOption('-level', 3.0)
@@ -70,6 +72,25 @@ function generateVideo(files, birate, resEnd, res) {
         })
       })
       .save(outputDirectory + "/" + defaultPlaylistName)
+}
+
+function generatePlayFile(name) {
+  const content = `#EXTM3U
+  #EXT-X-VERSION:3
+  #EXT-X-STREAM-INF:BANDWIDTH=600000,RESOLUTION=640x360
+  ${name}_320_240.m3u8'
+  #EXT-X-STREAM-INF:BANDWIDTH=1400000,RESOLUTION=842x480
+  ${name}_640_480.m3u8
+  #EXT-X-STREAM-INF:BANDWIDTH=2800000,RESOLUTION=1280x720
+  ${name}_1280_720.m3u8`
+
+  const outputName = name + "_final.m3u8" 
+  const outputDirectory = 'src/files/' + outputName;
+
+  fs.appendFile(outputDirectory, content, function (err) {
+    if (err) throw err;
+    console.log('Saved!');
+  });
 }
 
 function uploadToIpfs(outputDirectory, name) {
