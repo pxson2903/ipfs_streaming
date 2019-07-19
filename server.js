@@ -25,7 +25,7 @@ app.use(serveStatic(path.join(__dirname, 'src')))
 app.use(serveStatic(path.join(__dirname, 'playlists')))
 
 app.use('/playlists', function (req, res, next) { 
-  res.send(JSON.stringify(fs.readdirSync("src/files").filter(file => file.indexOf('_final.m3u8'))));
+  res.send(JSON.stringify(fs.readdirSync("src/files").filter(file => file.indexOf('_final.m3u8') > -1)));
 })
 
 app.use('/fileupload', function (req, res, next) {
