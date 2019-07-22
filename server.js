@@ -31,6 +31,8 @@ app.use('/playlists', function (req, res, next) {
 app.use('/fileupload', function (req, res, next) {
   var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
+      var name = files.filetoupload.name.substring(0, files.filetoupload.name.indexOf('.'))
+      generatePlayFile(name); 
       generateVideo(files, "320x240", false, res)
       generateVideo(files, "640x480", false, res)
       generateVideo(files, "1280x720", true, res)
@@ -44,7 +46,6 @@ function generateVideo(files, birate, resEnd, res) {
   var outputDirectory = 'src/uploads/' + outputName;
 
   mkdirp(outputDirectory);
-  generatePlayFile(name);
 
   ffmpeg(oldpath, { timeout: 432000 })
       .addOption('-level', 3.0)
